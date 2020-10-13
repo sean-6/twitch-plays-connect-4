@@ -1,10 +1,11 @@
 const tmi = require('tmi.js');
+const vars = require('./vars')
 
 // Define configuration options
 const opts = {
   identity: {
     username: vars.BOT_USERNAME,
-    password: vars.PASSWORD
+    password: vars.OAUTH_TOKEN
   },
   channels: [
     vars.CHANNEL_NAME
