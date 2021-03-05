@@ -14,5 +14,9 @@ def join(server):
             Loading = complete(line)
 
 
-def complete:
+def complete(line):
+    if("End of /NAMES list" in line):
+        return False
+    else:
+        return True
     
