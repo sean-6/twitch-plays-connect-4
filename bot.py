@@ -1,4 +1,5 @@
-import socket, string, os, utils
+import socket, string, os
+from init import join
 from vars import data
 
 dest = "irc.chat.twitch.tv"
@@ -14,6 +15,8 @@ server.send(bytes(f"PASS {token}\n".encode('utf-8')))
 server.send(bytes(f"NICK {nickname}\n".encode('utf-8')))
 server.send(bytes(f"JOIN {channel}\n".encode('utf-8')))
 
+join(server)
+
 def game_started():
     # Print game has started and wait for chat inputs
 
@@ -26,7 +29,7 @@ def gather_input():
 
 def getMessage(line):
     separate = line.split(":", 2)
-    print(line)
+    #print(separate)
     message = separate[2]
     return message
    
@@ -46,4 +49,4 @@ while True:
                     msg = getMessage(line)
                     usr = getUser(line)
 
-                    print(msg, usr)
+                    print(msg)
