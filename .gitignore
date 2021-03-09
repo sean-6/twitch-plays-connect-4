@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 vars.py
 vars.js
 /node_modules
+=======
+vars.js
+/node_modules
+>>>>>>> 8294dfb6d5a0d7e781331a3f9c1e2943ad2a17bb
