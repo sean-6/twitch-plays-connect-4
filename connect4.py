@@ -95,6 +95,7 @@ def loadGame():
 turn = 0
 
 def chooseLocation(col):
+    global turn
     if turn == 0:
         # GETTING MOUSE CLICK, NOT IMPORTANT FOR FINAL PROJ
         if is_valid_location(board, col):

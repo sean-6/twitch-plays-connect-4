@@ -1,5 +1,5 @@
 import socket, string, os, time, sys
-#import connect4
+import connect4
 import threading
 from init import join
 from vars import data
@@ -19,22 +19,29 @@ server.send(bytes(f"JOIN {channel}\n".encode('utf-8')))
 
 
 def gather_input():
+    print("----- THREAD RUNNING -----")
+    global message
     # Gather each input, MAX of 1 input per user, in a time frame of x seconds, return winning input
-    x = 10
+    x = 20
     t_end = time.time() + x
-    array = [0,1,2,3,4,5,6]
+    array = [0,0,0,0,0,0,0]
     while time.time() < t_end:
-        if message != "":
-            print(message + "test")
-        
-    
+        try:
+            num = int(message)
+            if 1<= num <= 7:
+                array[num-1] += 1
+                message = ""
+        except ValueError:
+            pass
+
+    connect4.chooseLocation(array.index(max(array)))
+
 def twitch():
     def getMessage(line):
         global message
         separate = line.split(":", 2)
         #print(separate)
         message = separate[2]
-        return message
     
     def getUser(line):
         separate = line.split(":", 2)
@@ -50,7 +57,7 @@ def twitch():
             if line == "PING :tmi.twitch.tv\r":
                 server.send(("PONG :tmi.twitch.tv\r\n").encode("utf-8"))
             else:
-                message = getMessage(line)
+                getMessage(line)
                 user = getUser(line)
 
                 print(message)
@@ -59,8 +66,12 @@ def twitch():
 if __name__ == '__main__':
     # Initiate program
     join(server)
-    #connect4.loadGame()
-    t1 = threading.Thread(target=twitch)
-    t1.start()
-    t2 = threading.Thread(target=gather_input)
-    t2.start
+    connect4.loadGame()
+    try:
+        t1 = threading.Thread(target=twitch)
+        t1.start()
+        t2 = threading.Thread(target=gather_input)
+        t2.start()
+    except:
+        print("Error starting threads.")
+    
