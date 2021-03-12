@@ -19,22 +19,26 @@ server.send(bytes(f"JOIN {channel}\n".encode('utf-8')))
 
 
 def gather_input():
-    print("----- THREAD RUNNING -----")
     global message
     # Gather each input, MAX of 1 input per user, in a time frame of x seconds, return winning input
     x = 20
-    t_end = time.time() + x
-    array = [0,0,0,0,0,0,0]
-    while time.time() < t_end:
-        try:
-            num = int(message)
-            if 1<= num <= 7:
-                array[num-1] += 1
-                message = ""
-        except ValueError:
-            pass
+    game_over = False
 
-    connect4.chooseLocation(array.index(max(array)))
+    while game_over != True:
+        t_end = time.time() + x
+        array = [0,0,0,0,0,0,0]
+        print("----- GATHERING INPUT -----")
+        while time.time() < t_end:
+            try:
+                num = int(message)
+                if 1<= num <= 7:
+                    array[num-1] += 1
+                    message = ""
+            except ValueError:
+                pass
+
+        game_over = connect4.chooseLocation(array.index(max(array)))
+        print(game_over)
 
 def twitch():
     def getMessage(line):

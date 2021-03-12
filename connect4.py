@@ -105,7 +105,7 @@ def chooseLocation(col):
             if winning_move(board, 1):
                 label = myfont.render("Player 1 wins!", 1, RED)
                 screen.blit(label, (40,10))
-                game_over = True
+                return True
 
             # #P2 Input
     else:
@@ -116,7 +116,7 @@ def chooseLocation(col):
             if winning_move(board, 2):
                 label = myfont.render("Player 1 wins!", 1, RED)
                 screen.blit(label)
-                game_over = True
+                return True
                 
                 
     print_board()
