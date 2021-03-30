@@ -22,7 +22,7 @@ server.send(bytes(f"JOIN {channel}\n".encode('utf-8')))
 def gather_input():
     global message
     # Gather each input, MAX of 1 input per user, in a time frame of x seconds, return winning input
-    x = 20
+    TIME_TO_WAIT = 5
     game_over = False
 
     # Wait for input to start the game
@@ -31,7 +31,7 @@ def gather_input():
 
     # Game started
     while game_over != True:
-        t_end = time.time() + x
+        t_end = time.time() + TIME_TO_WAIT
         array = [0,0,0,0,0,0,0]
         print("----- GATHERING INPUT -----")
         while time.time() < t_end:
