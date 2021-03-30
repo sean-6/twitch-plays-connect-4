@@ -1,4 +1,5 @@
 import numpy as np
+import random
 import pygame
 import sys
 import math
@@ -10,6 +11,8 @@ YELLOW = (255,255,0)
 
 ROW_COUNT = 6
 COLUMN_COUNT = 7
+PLAYER = 0
+AI = 1
 
 def create_board():
     board = np.zeros((ROW_COUNT,COLUMN_COUNT))
@@ -96,7 +99,7 @@ turn = 0
 
 def chooseLocation(col):
     global turn
-    if turn == 0:
+    if turn == PLAYER:
         # GETTING MOUSE CLICK, NOT IMPORTANT FOR FINAL PROJ
         if is_valid_location(board, col):
             row = get_next_open_row(board, col)
@@ -107,23 +110,27 @@ def chooseLocation(col):
                 screen.blit(label, (40,10))
                 return True
 
-            # #P2 Input
-    else:
-        if is_valid_location(board, col):
-            row = get_next_open_row(board, col)
-            drop_piece(board, row, col, 2)
+            # #P2
+    # else:
+    #     if is_valid_location(board, col):
+    #         row = get_next_open_row(board, col)
+    #         drop_piece(board, row, col, 2)
 
-            if winning_move(board, 2):
-                label = myfont.render("Player 1 wins!", 1, RED)
-                screen.blit(label)
-                return True
+    #         if winning_move(board, 2):
+    #             label = myfont.render("Player 1 wins!", 1, RED)
+    #             screen.blit(label)
+    #             return True
                 
                 
     print_board()
     draw_board(board)
     turn += 1
     turn %= 2
+
+    ai_drop()
     
+def ai_drop():
+    col = random.randint(0, COLUMN_COUNT-1)
 
 
 
@@ -136,10 +143,6 @@ def play_round():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            # print(event.pos)
-            #P1 Input
 
 
 

@@ -18,12 +18,18 @@ server.send(bytes(f"NICK {nickname}\n".encode('utf-8')))
 server.send(bytes(f"JOIN {channel}\n".encode('utf-8')))
 
 
+
 def gather_input():
     global message
     # Gather each input, MAX of 1 input per user, in a time frame of x seconds, return winning input
     x = 20
     game_over = False
 
+    # Wait for input to start the game
+    while message == "":
+        continue
+
+    # Game started
     while game_over != True:
         t_end = time.time() + x
         array = [0,0,0,0,0,0,0]
@@ -69,8 +75,8 @@ def twitch():
 
 if __name__ == '__main__':
     # Initiate program
-    join(server)
     connect4.loadGame()
+    join(server)
     try:
         t1 = threading.Thread(target=twitch)
         t1.start()
