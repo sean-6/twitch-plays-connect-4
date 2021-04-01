@@ -7,6 +7,7 @@ import random
 import pygame
 import sys
 import math
+import bot
 
 BLUE = (0,0,255)
 BLACK = (0,0,0)
@@ -49,8 +50,8 @@ def winning_move(board, piece):
                 return True
 
     # Verticals
-    for c in range(COLUMN_COUNT-3):
-        for r in range(ROW_COUNT):
+    for c in range(COLUMN_COUNT):
+        for r in range(ROW_COUNT-3):
             if board[r][c] == piece and board[r+1][c] == piece and board[r+2][c] == piece and board[r+3][c] == piece:
                 return True
 
@@ -72,7 +73,7 @@ def evaluate_window(window, piece):
     if piece == PLAYER_PIECE:
         opponent_piece = AI_PIECE
 
-    if window.couint(piece) == 4:
+    if window.count(piece) == 4:
         score += 100
     elif window.count(piece) == 3 and window.count(EMPTY) == 1:
         score += 10
@@ -112,7 +113,7 @@ def score_position(board, piece):
     # Positive sloped diagonal score
     for r in range(ROW_COUNT-3):
         for c in range(COLUMN_COUNT-3):
-            window = [board[r+i][c+i] for i in range[WINDOW_LENGTH]]
+            window = [board[r+i][c+i] for i in range(WINDOW_LENGTH)]
             score += evaluate_window(window, piece)
 
     # Negative sloped
@@ -245,14 +246,13 @@ def chooseLocation(col):
     print_board()
     draw_board(board)
 
-    if ai_drop():
-        return True
+    ai_drop()
     
 def ai_drop():
-    sleep(5)
-    col = minimax(board, 2, True)
+    col, minimax_score = minimax(board, 2, True)
 
     if is_valid_location(board, col):
+        pygame.time.wait(500)
         row = get_next_open_row(board, col)
         drop_piece(board, row, col, AI_PIECE)
                 

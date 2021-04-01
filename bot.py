@@ -1,4 +1,5 @@
 import socket, string, os, time, sys
+import pygame
 import connect4
 import threading
 from init import join
@@ -18,8 +19,7 @@ server.send(bytes(f"NICK {nickname}\n".encode('utf-8')))
 server.send(bytes(f"JOIN {channel}\n".encode('utf-8')))
 
 
-
-def gather_input():
+def game_loop():
     global message
     # Gather each input, MAX of 1 input per user, in a time frame of x seconds, return winning input
     TIME_TO_WAIT = 5
@@ -29,8 +29,8 @@ def gather_input():
     while message == "":
         continue
 
-    # Game started
-    while game_over != True:
+    # Game loop
+    while not game_over:
         t_end = time.time() + TIME_TO_WAIT
         array = [0,0,0,0,0,0,0]
         print("----- GATHERING INPUT -----")
@@ -80,7 +80,7 @@ if __name__ == '__main__':
     try:
         t1 = threading.Thread(target=twitch)
         t1.start()
-        t2 = threading.Thread(target=gather_input)
+        t2 = threading.Thread(target=game_loop)
         t2.start()
     except:
         print("Error starting threads.")
