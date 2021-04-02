@@ -25,6 +25,8 @@ game_started = False
 
 def game():
     global message
+    global game_started
+
     TIME_TO_WAIT = 5
     
     game_over = False
@@ -42,9 +44,14 @@ def game():
                         message = ""
                 except ValueError:
                     pass
-            game_over = connect4.chooseLocation(array.index(max(array)), board)
+            game_tuple = connect4.chooseLocation(array.index(max(array)), board)
+            if not game_tuple == None:
+                print("Player {player} wins!".format(player=game_tuple[1]))
+                game_over = game_tuple[0]
+                view.showWinningText(game_tuple[1])
             print(game_over)
 
+    game_started = False 
 
 def twitch():
     global game_started
@@ -74,8 +81,8 @@ def twitch():
                 if int(message) and not game_started:
                     print("Game started")
                     game_started = True
-                    event = pygame.event.Event(pygame.JOYBUTTONUP)
-                    pygame.event.post(event)
+                    # event = pygame.event.Event(pygame.JOYBUTTONUP)
+                    # pygame.event.post(event)
                     t2.start()
 
                 print(message)
@@ -100,10 +107,5 @@ if __name__ == '__main__':
                 game_over = True
                 raise SystemExit
 
-            if event.type == pygame.JOYBUTTONUP:
-                print("post worked")
-            if event.type == pygame.KEYDOWN:
-                print("BUTTON DOWN")
-                val = event.__dict__['val']
-                game_over = connect4.chooseLocation(val, board)
-                print(game_over)
+            # if event.type == pygame.JOYBUTTONUP:
+            #     print("post worked")

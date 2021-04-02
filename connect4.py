@@ -191,29 +191,27 @@ def chooseLocation(col, board):
     if is_valid_location(board, col):
         row = get_next_open_row(board, col)
         drop_piece(board, row, col, PLAYER_PIECE)
-                
+
+        view.print_board(board)
+        view.draw_board(board)         
+
         if winning_move(board, PLAYER_PIECE):
-            # label = myfont.render("Player 1 wins!", 1, RED)
-            # screen.blit(label, (40,10))
-            return True
+            return True, PLAYER_PIECE
                 
-    view.print_board(board)
-    view.draw_board(board)
+
 
     ai_drop(board)
     
 def ai_drop(board):
-    col, minimax_score = minimax(board, 2, True)
+    col, minimax_score = minimax(board, 1, True)
 
     if is_valid_location(board, col):
         pygame.time.wait(500)
         row = get_next_open_row(board, col)
         drop_piece(board, row, col, AI_PIECE)
-                
-        if winning_move(board, AI_PIECE):
-            # label = myfont.render("Player 2 wins!", 1, RED)
-            # screen.blit(label, (40,10))
-            return True
 
-    view.print_board(board)
-    view.draw_board(board)
+        view.print_board(board)
+        view.draw_board(board)
+        
+        if winning_move(board, AI_PIECE):
+            return True, AI_PIECE

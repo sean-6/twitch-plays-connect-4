@@ -50,3 +50,9 @@ def loadGame(board):
 
 def print_board(board):
     print(np.flip(board, 0))
+
+def showWinningText(player):
+    text = ("Player {player} wins!").format(player=player)
+    label = myfont.render(text, 1, RED)
+    screen.blit(label, (40,10))
+    pygame.display.update()
