@@ -1,6 +1,3 @@
-from time import sleep
-from typing import ValuesView
-
 from pygame.event import get
 import numpy as np
 import random
@@ -37,7 +34,6 @@ def get_next_open_row(board, col):
     for r in range(ROW_COUNT):
         if board[r][col] == 0:
             return r
-
 
 def winning_move(board, piece):
     # Check horizontals
