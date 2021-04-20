@@ -50,7 +50,6 @@ def game():
                 game_over = game_tuple[0]
                 view.showWinningText(game_tuple[1])
             print(game_over)
-
     game_started = False 
 
 def twitch():
