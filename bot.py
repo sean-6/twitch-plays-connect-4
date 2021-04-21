@@ -22,35 +22,39 @@ server.send(bytes(f"JOIN {channel}\n".encode('utf-8')))
 board = connect4.create_board()
 view.loadGame(board)
 game_started = False
-
 def game():
     global message
     global game_started
 
     TIME_TO_WAIT = 5
-    
-    game_over = False
-    # Gather each input, MAX of 1 input per user, in a time frame of x seconds, return winning input
-    while not game_over:
-        if message != "":
-            t_end = time.time() + TIME_TO_WAIT
-            array = [0,0,0,0,0,0,0]
-            print("----- GATHERING INPUT -----")
-            while time.time() < t_end:
-                try:
-                    num = int(message)
-                    if 1<= num <= 7:
-                        array[num-1] += 1
-                        message = ""
-                except ValueError:
-                    pass
-            game_tuple = connect4.chooseLocation(array.index(max(array)), board)
-            if not game_tuple == None:
-                print("Player {player} wins!".format(player=game_tuple[1]))
-                game_over = game_tuple[0]
-                view.showWinningText(game_tuple[1])
-            print(game_over)
-    game_started = False 
+    # Thread loop
+    while True:
+        if game_started:
+            board = connect4.create_board()
+            view.screen.fill((0,0,0))
+            view.loadGame(board)
+            game_over = False
+            # Gather each input, MAX of 1 input per user, in a time frame of x seconds, return winning input
+            while not game_over:
+                if message != "":
+                    t_end = time.time() + TIME_TO_WAIT
+                    array = [0,0,0,0,0,0,0]
+                    print("----- GATHERING INPUT -----")
+                    while time.time() < t_end:
+                        try:
+                            num = int(message)
+                            if 1<= num <= 7:
+                                array[num-1] += 1
+                                message = ""
+                        except ValueError:
+                            pass
+                    game_tuple = connect4.chooseLocation(array.index(max(array)), board)
+                    if not game_tuple == None:
+                        print("Player {player} wins!".format(player=game_tuple[1]))
+                        game_over = game_tuple[0]
+                        view.showWinningText(game_tuple[1])
+                    print(game_over)
+            game_started = False 
 
 def twitch():
     global game_started
@@ -82,7 +86,6 @@ def twitch():
                     game_started = True
                     # event = pygame.event.Event(pygame.JOYBUTTONUP)
                     # pygame.event.post(event)
-                    t2.start()
 
                 print(message)
 
@@ -97,6 +100,7 @@ if __name__ == '__main__':
 
     t2 = threading.Thread(target=game)
     t2.daemon = True
+    t2.start()
 
     # game loop
     game_over = False
