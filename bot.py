@@ -19,9 +19,7 @@ server.send(bytes(f"PASS {token}\n".encode('utf-8')))
 server.send(bytes(f"NICK {nickname}\n".encode('utf-8')))
 server.send(bytes(f"JOIN {channel}\n".encode('utf-8')))
 
-board = connect4.create_board()
-view.loadGame(board)
-game_started = False
+
 def game():
     global message
     global game_started
@@ -32,7 +30,8 @@ def game():
         if game_started:
             board = connect4.create_board()
             view.screen.fill((0,0,0))
-            view.loadGame(board)
+            view.removeText()
+
             game_over = False
             # Gather each input, MAX of 1 input per user, in a time frame of x seconds, return winning input
             while not game_over:
@@ -92,7 +91,10 @@ def twitch():
 if __name__ == '__main__':
     # Initiate program
     join(server)
+    board = connect4.create_board()
+    view.removeText()
     view.loadGame(board)
+    game_started = False
 
     t1 = threading.Thread(target=twitch)
     t1.daemon = True
@@ -107,6 +109,7 @@ if __name__ == '__main__':
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                view.removeText()
                 game_over = True
                 raise SystemExit
 

@@ -15,7 +15,7 @@ AI_PIECE = 2
 
 SQUARESIZE = 100
 width = COLUMN_COUNT * SQUARESIZE
-height = (ROW_COUNT+1) * SQUARESIZE # Can take out +1 later
+height = (ROW_COUNT) * SQUARESIZE # Can take out +1 later
 size = (width , height)
 RADIUS = int(SQUARESIZE/2 -5)
 
@@ -32,8 +32,8 @@ pygame.event.set_blocked(pygame.MOUSEBUTTONUP)
 def draw_board(board):
     for c in range(COLUMN_COUNT):
         for r in range(ROW_COUNT):
-            pygame.draw.rect(screen, BLUE, (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
-            pygame.draw.circle(screen, BLACK, (c*SQUARESIZE+SQUARESIZE/2, (r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+            pygame.draw.rect(screen, BLUE, (c*SQUARESIZE, r*SQUARESIZE, SQUARESIZE, SQUARESIZE))
+            pygame.draw.circle(screen, BLACK, (c*SQUARESIZE+SQUARESIZE/2, (r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
             
     for c in range(COLUMN_COUNT):
         for r in range(ROW_COUNT):
@@ -53,6 +53,14 @@ def print_board(board):
 
 def showWinningText(player):
     text = ("Player {player} wins!").format(player=player)
+    f = open("winner.txt", "w")
+    f.write(text)
+    f.close()
     label = myfont.render(text, 1, RED)
     screen.blit(label, (40,10))
     pygame.display.update()
+
+def removeText():
+    f = open("winner.txt", "w")
+    f.write("")
+    f.close()
