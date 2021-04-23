@@ -5,7 +5,7 @@ import pygame
 import view
 import math
 
-DIFFICULTY_LEVEL = 1
+DIFFICULTY_LEVEL = 4
 
 BLUE = (0,0,255)
 BLACK = (0,0,0)
@@ -200,7 +200,7 @@ def chooseLocation(col, board):
     col, minimax_score = minimax(board, DIFFICULTY_LEVEL, True)
 
     if is_valid_location(board, col):
-        pygame.time.wait(500)
+        pygame.time.wait(1000)
         row = get_next_open_row(board, col)
         drop_piece(board, row, col, AI_PIECE)
 
