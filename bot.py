@@ -25,7 +25,7 @@ def game():
     global message
     global game_started
 
-    TIME_TO_WAIT = 35
+    TIME_TO_WAIT = 10
     # Thread loop
     while True:
         if game_started:
@@ -51,11 +51,19 @@ def game():
                                 message = ""
                         except ValueError:
                             pass
+                    
 
-                    if all(elem == array[0] for elem in array):
-                        game_tuple = connect4.chooseLocation(random.randint(1,7), board)
+                    maxElem = array.index(max(array))
+                    maxes = []
+                    # Checking if more than 1 elements have the same value
+                    for i in range(len(array)):
+                        if i == maxElem:
+                            maxes.append(i)
+                
+                    if len(maxes) > 1:
+                         game_tuple = connect4.chooseLocation(random.choice(maxes), board) 
                     else:
-                        game_tuple = connect4.chooseLocation(array.index(max(array)), board)
+                        game_tuple = connect4.chooseLocation(maxElem, board)
                 
                     if not game_tuple == None:
                         print("Player {player} wins!".format(player=game_tuple[1]))
@@ -64,7 +72,7 @@ def game():
                         message = ""
                     print(game_over)
                     if not game_over:
-                        time.sleep(3.5)
+                        time.sleep(4.2)
             game_started = False 
             view.updateCurrentText("Game over, waiting to restart...")
 
@@ -122,7 +130,8 @@ if __name__ == '__main__':
     difficulties = ["debug", "Easy", "Medium", "Hard"]
     with open("difficulty.txt", "w") as f:
         f.write(difficulties[connect4.DIFFICULTY_LEVEL-1])
-    # game loop
+
+    # pygame loop
     game_over = False
     while not game_over:
         for event in pygame.event.get():

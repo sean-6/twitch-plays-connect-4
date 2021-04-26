@@ -63,9 +63,6 @@ def updateWinner(player):
         f.seek(0)
         f.write(str(counter))
 
-
-
-
     # label = myfont.render(text, 1, RED)
     # screen.blit(label, (40,10))
     # pygame.display.update()
