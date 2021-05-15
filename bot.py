@@ -25,7 +25,7 @@ def game():
     global message
     global game_started
 
-    TIME_TO_WAIT = 10
+    TIME_TO_WAIT = 18
     # Thread loop
     while True:
         if game_started:
@@ -54,16 +54,18 @@ def game():
                     
 
                     maxElem = array.index(max(array))
-                    maxes = []
+                    maxes = [maxElem]
                     # Checking if more than 1 elements have the same value
                     for i in range(len(array)):
-                        if i == maxElem:
+                        if i == array[maxElem]:
                             maxes.append(i)
                 
                     if len(maxes) > 1:
-                         game_tuple = connect4.chooseLocation(random.choice(maxes), board) 
+                        game_tuple = connect4.chooseLocation(random.choice(maxes), board) 
+                        print(array)
                     else:
                         game_tuple = connect4.chooseLocation(maxElem, board)
+                        print(array)
                 
                     if not game_tuple == None:
                         print("Player {player} wins!".format(player=game_tuple[1]))

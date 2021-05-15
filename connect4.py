@@ -5,7 +5,7 @@ import pygame
 import view
 import math
 
-DIFFICULTY_LEVEL = 4
+DIFFICULTY_LEVEL = 2
 
 BLUE = (0,0,255)
 BLACK = (0,0,0)
@@ -93,10 +93,7 @@ def score_position(board, piece):
         row_array = [int(i) for i in list(board[r,:])]
         for c in range(COLUMN_COUNT-3):
             window = row_array[c:c+WINDOW_LENGTH]
-            if window.count(piece) == 4:
-                score += 100
-            elif window.count(piece) == 3 and window.count(EMPTY) == 1:
-                score += 10
+            score += evaluate_window(window, piece)
 
     # Vertical score
     for c in range(COLUMN_COUNT):
