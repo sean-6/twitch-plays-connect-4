@@ -57,18 +57,12 @@ def game():
                     maxes = [maxElem]
                     # Checking if more than 1 elements have the same value
                     for i in range(len(array)):
-                        print(i, "greater")
                         if array[i] == array[maxElem] and i != maxElem:
-                            print(i)
                             maxes.append(i)
-                    print(maxes)
                     if len(maxes) > 1:
-                        print("gone to max array")
                         game_tuple = connect4.chooseLocation(random.choice(maxes), board) 
-                        print(array)
                     else:
                         game_tuple = connect4.chooseLocation(maxElem, board)
-                        print(array)
                 
                     if not game_tuple == None:
                         print("Player {player} wins!".format(player=game_tuple[1]))
