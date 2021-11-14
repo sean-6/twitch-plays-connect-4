@@ -24,12 +24,9 @@ You must create a file named 'vars.py' in the main directory, which will hold al
     }
 ```
 
-• BOT_USERNAME – value must be set to a string containing the username of the bot 
-account
-• OAUTH_TOKEN – value must be a string containing the chatbots OAuth key, 
-retrieved on the Twitch developer website
-• CHANNEL_NAME – value must be set to a string containing the channel in which the 
-bot will be run (generally the bots channel)
-• PORT – value must be set to the integer: 6667
+- BOT_USERNAME – value must be set to a string containing the username of the bot account
+- OAUTH_TOKEN – value must be a string containing the chatbots OAuth key, retrieved on the Twitch developer website
+- CHANNEL_NAME – value must be set to a string containing the channel in which the bot will be run (generally the bots channel)
+- PORT – value must be set to the integer: 6667
 
 ##### On completion of these prerequisites, the bot can be run by opening the Bot.py file.
