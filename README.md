@@ -12,8 +12,18 @@ Python as standards comes with the pip package installer, by using pip, NumPy ca
 installed with the command:
 pip install numpy
 
-##### Populating Vars.py file
-The Vars.py file contains a dictionary with the keys:
+##### Populating a Vars.py file
+You must create a file named 'vars.py' in the main directory, which will hold all of the variables for the chatbot. Use the template below.
+
+```
+    data = {
+        "BOT_USERNAME": "",
+        "OAUTH_TOKEN": "",
+        "CHANNEL_NAME":"",
+        "PORT": 6667
+    }
+```
+
 • BOT_USERNAME – value must be set to a string containing the username of the bot 
 account
 • OAUTH_TOKEN – value must be a string containing the chatbots OAuth key, 
